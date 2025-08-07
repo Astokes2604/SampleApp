@@ -1,0 +1,195 @@
+/* ============================
+    MAIN FORMAT
+============================ */
+.page {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.image {
+    width: 100%;
+    max-width: 400px;
+    display: block;
+    margin: 20px auto;
+}
+
+.demon-page {
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 12px;
+    padding: 30px;
+    color: #fbe5d6;
+    box-shadow: 0 0 15px #ff5f5f;
+    background-image: url('https://wallpapercave.com/uwp/uwp4685475.jpeg');
+    background-size: cover;
+    background-blend-mode: multiply;
+}
+
+.demon-heading {
+    font-family: 'Brush Script MT', cursive;
+    font-size: 2.5rem;
+    color: #fbe5d6;
+    text-shadow: 2px 2px #ff5f5f;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.demon-shadow {
+    border: 5px solid #ff5f5f;
+    box-shadow: 0 0 10px #ff5f5f;
+    border-radius: 10px;
+}
+/* ============================
+    CONTACT FORM FORMAT
+============================ */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #ff5f5f33;
+}
+
+form label {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #ffb6b6;
+    margin-bottom: 5px;
+}
+
+form input,
+form textarea {
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    background-color: #1e1e1e;
+    color: #fbe5d6;
+    outline: none;
+    box-shadow: inset 0 0 5px #ff5f5f66;
+    transition: box-shadow 0.3s;
+}
+
+form input:focus,
+form textarea:focus {
+    box-shadow: 0 0 8px #ff5f5f;
+}
+
+form textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+form button {
+    padding: 12px;
+    background-color: #ff5f5f;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: not-allowed;
+    opacity: 0.6;
+    transition: opacity 0.3s, transform 0.2s;
+}
+
+form button:hover {
+    opacity: 0.8;
+    transform: scale(1.02);
+}
+/* ============================
+    POKEMON GALLERY FORMAT
+============================ */
+.gallery-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(7, auto);
+    gap: 20px;
+    padding: 20px;
+    justify-items: center;
+}
+
+.pokemon-card {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 2px solid #888;
+    border-radius: 15px;
+    padding: 15px;
+    width: 120px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    transition: transform 0.3s;
+}
+
+.pokemon-card:hover {
+    transform: scale(1.05);
+}
+
+.pokemon-card img {
+    width: 120px;
+    height: 120px;
+}
+
+.pokemon-name {
+    font-size: 1.2em;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.pokemon-number {
+    font-size: 1em;
+    color: #ddd;
+}
+
+.pokemon-details {
+    margin-top: 10px;
+}
+
+.pokemon-detail-item {
+    font-size: 0.9em;
+    margin: 5px 0;
+}
+
+.selected-pokemon-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+}
+
+a {
+    color: #61dafb;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    gap: 10px;
+}
+
+.pagination-button {
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #fff;
+    border: none;
+    border-radius: 8px;
+}
+
+.pagination-button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.pagination-page-number {
+    font-weight: bold;
+    font-size: 16px;
+}

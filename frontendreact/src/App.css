@@ -1,0 +1,28 @@
+.navbar {
+  background-color: #1d222f;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  border-bottom: 3px solid #6d3c52;
+}
+.navbar a {
+  color: #fadcd5;
+  text-decoration: none;
+  font-weight: bold;
+  font-family: 'Arial Black', Gadget, sans-serif;
+}
+.navbar a:hover {
+  text-decoration: underline;
+  color: #ff5f5f;
+}
+.app.demon-bg {
+  background-color: #1b0c1a;
+  min-height: 100vh;
+  padding-bottom: 50px;
+}
+.demon-border {
+  border-image: linear-gradient(to right, #ff5f5f, #6d3c52) 1;
+  border-width: 4px;
+  border-style: solid;
+}
