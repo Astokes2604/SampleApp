@@ -40,8 +40,9 @@
     box-shadow: 0 0 10px #ff5f5f;
     border-radius: 10px;
 }
+
 /* ============================
-    CONTACT FORM FORMAT
+    CONTACT / CRUD FORM FORMAT
 ============================ */
 form {
     display: flex;
@@ -83,53 +84,81 @@ form textarea {
     min-height: 120px;
 }
 
-form button {
+/* CRUD buttons */
+.btn {
     padding: 12px;
-    background-color: #ff5f5f;
-    color: #fff;
     border: none;
     border-radius: 8px;
     font-size: 1.1rem;
     font-weight: bold;
-    cursor: not-allowed;
-    opacity: 0.6;
+    cursor: pointer;
     transition: opacity 0.3s, transform 0.2s;
 }
 
-form button:hover {
-    opacity: 0.8;
+/* Add Button */
+.btn-add {
+    background-color: #28a745;
+    color: white;
+}
+
+.btn-add:hover {
+    opacity: 0.9;
     transform: scale(1.02);
 }
+
+/* Edit Button */
+.btn-edit {
+    background-color: #ffc107;
+    color: #222;
+}
+
+.btn-edit:hover {
+    opacity: 0.9;
+    transform: scale(1.02);
+}
+
+/* Delete Button */
+.btn-delete {
+    background-color: #ff5f5f;
+    color: white;
+}
+
+.btn-delete:hover {
+    opacity: 0.9;
+    transform: scale(1.02);
+}
+
 /* ============================
     POKEMON GALLERY FORMAT
 ============================ */
 .gallery-container {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(7, auto);
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
     gap: 20px;
     padding: 20px;
     justify-items: center;
 }
 
 .pokemon-card {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(255, 255, 255, 0.12);
     border: 2px solid #888;
     border-radius: 15px;
     padding: 15px;
-    width: 120px;
     text-align: center;
+    width: 100%;
+    max-width: 150px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-    transition: transform 0.3s;
+    transition: transform 0.3s, border-color 0.3s;
 }
 
 .pokemon-card:hover {
     transform: scale(1.05);
+    border-color: #ff5f5f;
 }
 
 .pokemon-card img {
-    width: 120px;
-    height: 120px;
+    width: 100%;
+    height: auto;
 }
 
 .pokemon-name {
@@ -152,12 +181,9 @@ form button:hover {
     margin: 5px 0;
 }
 
-.selected-pokemon-container {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 40px;
-}
-
+/* ============================
+    LINKS & PAGINATION
+============================ */
 a {
     color: #61dafb;
     text-decoration: none;
