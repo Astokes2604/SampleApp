@@ -1,8 +1,11 @@
 package com.example.backend.controller;
 
+import com.example.backend.model.Pokemon;
+import com.example.backend.service.PokemonService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.http.ResponseEntity;
+
 import java.util.*;
 
 @RestController
@@ -14,9 +17,11 @@ public class PokemonController {
     private final int PAGE_SIZE = 21;
     private final int MAX_POKEMON = 1025;
 
-    // In-memory store for CRUD
-    private final Map<Integer, Map<String, Object>> myPokemon = new HashMap<>();
-    private int currentId = 1;
+    private final PokemonService service;
+
+    public PokemonController(PokemonService service) {
+        this.service = service;
+    }
 
     // ------------------------------
     // Existing endpoints from PokéAPI
@@ -28,7 +33,6 @@ public class PokemonController {
 
         int offset = (page - 1) * PAGE_SIZE;
 
-        // Clamp offset to prevent exceeding the max limit
         if (offset >= MAX_POKEMON) {
             return ResponseEntity.ok(Collections.emptyMap());
         }
@@ -45,7 +49,6 @@ public class PokemonController {
         String url = "https://pokeapi.co/api/v2/pokemon/" + name;
         Map details = restTemplate.getForObject(url, Map.class);
 
-        // Get evolution info
         Map species = restTemplate.getForObject((String) ((Map) details.get("species")).get("url"), Map.class);
         Map evolutionChain = restTemplate.getForObject((String) ((Map) species.get("evolution_chain")).get("url"), Map.class);
 
@@ -60,50 +63,47 @@ public class PokemonController {
     }
 
     // ------------------------------
-    // CRUD: My Pokémon Collection
+    // CRUD: My Pokémon Collection (DB)
     // ------------------------------
 
     // Create
     @PostMapping("/my")
-    public ResponseEntity<?> addPokemon(@RequestBody Map<String, Object> pokemon) {
-        pokemon.put("id", currentId++);
-        myPokemon.put((Integer) pokemon.get("id"), pokemon);
-        return ResponseEntity.ok(pokemon);
+    public ResponseEntity<Pokemon> addPokemon(@RequestBody Pokemon pokemon) {
+        return ResponseEntity.ok(service.savePokemon(pokemon));
     }
 
     // Read All
     @GetMapping("/my")
-    public ResponseEntity<?> getAllMyPokemon() {
-        return ResponseEntity.ok(myPokemon.values());
+    public ResponseEntity<List<Pokemon>> getAllMyPokemon() {
+        return ResponseEntity.ok(service.getAllPokemon());
     }
 
     // Read One
     @GetMapping("/my/{id}")
-    public ResponseEntity<?> getMyPokemonById(@PathVariable int id) {
-        Map<String, Object> pokemon = myPokemon.get(id);
-        if (pokemon == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(pokemon);
+    public ResponseEntity<Pokemon> getMyPokemonById(@PathVariable Long id) {
+        return service.getPokemonById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     // Update
     @PutMapping("/my/{id}")
-    public ResponseEntity<?> updateMyPokemon(@PathVariable int id, @RequestBody Map<String, Object> updatedPokemon) {
-        if (!myPokemon.containsKey(id)) {
+    public ResponseEntity<Pokemon> updateMyPokemon(@PathVariable Long id, @RequestBody Pokemon updatedPokemon) {
+        try {
+            return ResponseEntity.ok(service.updatePokemon(id, updatedPokemon));
+        } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();
         }
-        updatedPokemon.put("id", id);
-        myPokemon.put(id, updatedPokemon);
-        return ResponseEntity.ok(updatedPokemon);
     }
 
     // Delete
     @DeleteMapping("/my/{id}")
-    public ResponseEntity<?> deleteMyPokemon(@PathVariable int id) {
-        if (myPokemon.remove(id) == null) {
+    public ResponseEntity<?> deleteMyPokemon(@PathVariable Long id) {
+        try {
+            service.deletePokemon(id);
+            return ResponseEntity.noContent().build();
+        } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.noContent().build();
     }
 }
